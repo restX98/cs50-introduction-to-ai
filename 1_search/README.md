@@ -47,7 +47,7 @@ In a search process, data is often stored in a node, a data structure that conta
 - The action that was applied to the state of the parent to get to the current node
 - The path cost from the initial state to this node
 
-Nodes are simply a data structure, they don’t search, they hold information. To actually search, we use the frontier, the mechanism that “manages” the nodes. The frontier starts by containing an initial state and an empty set of explored items, and then repeats the following actions until a solution is reached:
+Nodes are simply a data structure, they don’t search, they hold information. To actually search, we use the **frontier**, the mechanism that “manages” the nodes. The **frontier** starts by containing an initial state and an empty set of explored items, and then repeats the following actions until a solution is reached:
 
 #### Repeat:
 ```
