@@ -80,3 +80,6 @@ This knowledge is typically provided in the form of a heuristic function, which 
 
 Examples: A* and Greedy Best-First Search.
 
+# Adversarial Search
+
+The adversarial search algorithm faces an opponent that tries to achieve the opposite goal.
