@@ -125,7 +125,7 @@ class AIPlayer(PlayerStrategy):
                 eligible_move.append(i)
         return eligible_move
 
-    def _max_value(self, current_board: Board):
+    def _max_value(self, current_board: Board, current_best):
         if current_board.check_winner():
             return (-1, None)
 
@@ -139,13 +139,16 @@ class AIPlayer(PlayerStrategy):
             self.iteration += 1
             board = copy.deepcopy(current_board)
             board.fill(move, True)
-            result = self._min_value(board)
+            result = self._min_value(board, best_score)
+            # Optimization
+            if not self.is_maximizing and result[0] >= current_best:
+                return (float("inf"), best_move)
             if result[0] > best_score:
                 best_score = result[0]
                 best_move = move
         return (best_score, best_move)
 
-    def _min_value(self, current_board: Board):
+    def _min_value(self, current_board: Board, current_best):
         if current_board.check_winner():
             return (1, None)
 
@@ -159,7 +162,10 @@ class AIPlayer(PlayerStrategy):
             self.iteration += 1
             board = copy.deepcopy(current_board)
             board.fill(move, False)
-            result = self._max_value(board)
+            result = self._max_value(board, best_score)
+            # Optimization
+            if self.is_maximizing and result[0] <= current_best:
+                return (float("-inf"), best_move)
             if result[0] < best_score:
                 best_score = result[0]
                 best_move = move
@@ -170,9 +176,9 @@ class AIPlayer(PlayerStrategy):
         print(f"AI {self.name} is thinking...")
         start_board = copy.deepcopy(self.board)
         result = (
-            self._max_value(start_board)
+            self._max_value(start_board, float("inf"))
             if self.is_maximizing
-            else self._min_value(start_board)
+            else self._min_value(start_board, float("-inf"))
         )
         print(
             f"AI {self.name} has chosen: {result[1] + 1} with {self.iteration} iterations"

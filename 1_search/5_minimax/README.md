@@ -6,7 +6,7 @@ Minimax is a type of algorithm in adversarial search, represents winning conditi
 ## Representing a Tic-Tac-Toe AI:
 
 - `S₀`: Initial state (in our case, an empty 3X3 board)
-- `Players(s)`: a function that, given a state s, returns which player’s turn it is (X or O), in my implementation is not present but could be used to ignore the player symbol and start always with the max-value function.
+- `Players(s)`: a function that, given a state s, returns which player’s turn it is (X or O).
 - `Actions(s)`: a function that, given a state s, return all the legal moves in this state (what spots are free on the board).
 - `Result(s, a)`: a function that, given a state s and action a, returns a new state. This is the board that resulted from performing the action a on state s (making a move in the game).
 - `Terminal(s)`: a function that, given a state s, checks whether this is the last step in the game, i.e. if someone won or there is a tie. Returns True if the game has ended, False otherwise.
@@ -42,3 +42,7 @@ Function Min-Value(state):
          value = min(v, Max-Value(Result(state, action)))
 
 ```
+
+# Depth-Limited Minimax
+
+Depth-limited Minimax considers only a pre-defined number of moves before it stops, without ever getting to a terminal state. However, this doesn’t allow for getting a precise value for each action, since the end of the hypothetical games has not been reached. To deal with this problem, Depth-limited Minimax relies on an evaluation function that estimates the expected utility of the game from a given state, or, in other words, assigns values to states. For example, in a chess game, a utility function would take as input a current configuration of the board, try to assess its expected utility (based on what pieces each player has and their locations on the board), and then return a positive or a negative value that represents how favorable the board is for one player versus the other.
